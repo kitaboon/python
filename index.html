@@ -39,23 +39,335 @@
   </head>
   <body>
     <span style="color: white;-webkit-user-select: none;-moz-user-select: none;-ms-user-select: none;user-select: none;" id="msg">
-        1 done
+        All done
     </span>
     <div class="bg">
-      <button id="btn" class="btn"></button>
-	  <script>
+      <button id="btn" class="btn">1</button>
+      <button id="btn2" class="btn" style="top: 100px;">2</button>
+    </div>
+    <textarea id="textarea" cols="1" rows="1" style="white-space: pre-wrap;">
+def main(path):
+    d = {
+        'i': 0,
+        'p': {
+            '1957': {
+                'i': 3,
+                'p': {
+                    '2001': {
+                        'i': 1,
+                        'p': {
+                            'JAVA': 0,
+                            'SCSS': {
+                                'i': 2,
+                                'p': {
+                                    'SHELL': 1,
+                                    'MESON': 2,
+                                }
+                            },
+                            'LEAN': 3
+                        }
+                    },
+                    '1975': 4,
+                    '1964': 5,
+                }
+            },
+            '2020': {
+                'i': 4,
+                'p': {
+                    '2001': {
+                        'i': 1,
+                        'p': {
+                            'JAVA': 6,
+                            'SCSS': 7,
+                            'LEAN': {
+                                'i': 3,
+                                'p': {
+                                    '2001': 8,
+                                    '1975': 9,
+                                    '1964': 10,
+                                }
+                            }
+                        }
+                    },
+                    '1962': 11,
+                    '1991': 12,
+                }
+            },
+        }
+    }
+    r = d
+    while type(r) is not int:
+        r = r['p'][str(path[r['i']])]
+    return r    
+</textarea>
+    <textarea id="textarea" cols="1" rows="1" style="white-space: pre-wrap;">
+class MealyError(Exception):
+    pass
+
+
+class StateMachine:
+    def __init__(self):
+        self.state = 'A'
+
+    def post(self):
+        if self.state == 'A':
+            self.state = 'B'
+            return 0
+        raise MealyError('post')
+
+    def clone(self):
+        if self.state == 'A':
+            self.state = 'G'
+            return 1
+        if self.state == 'B':
+            self.state = 'D'
+            return 3
+        if self.state == 'D':
+            self.state = 'E'
+            return 6
+        if self.state == 'F':
+            self.state = 'G'
+            return 9
+        if self.state == 'G':
+            self.state = 'H'
+            return 10
+        if self.state == 'H':
+            self.state = 'H'
+            return 11
+        raise MealyError('clone')
+
+    def mute(self):
+        if self.state == 'B':
+            self.state = 'C'
+            return 2
+        if self.state == 'C':
+            self.state = 'D'
+            return 4
+        if self.state == 'D':
+            self.state = 'G'
+            return 7
+        if self.state == 'E':
+            self.state = 'F'
+            return 8
+        raise MealyError('mute')
+
+    def drag(self):
+        if self.state == 'C':
+            self.state = 'F'
+            return 5
+        raise MealyError('drag')
+
+
+def main():
+    return StateMachine()
+
+
+def raises(func, error):
+    output = None
+    try:
+        output = func()
+    except Exception as e:
+        assert type(e) == error
+    assert output is None
+
+
+def test():
+    o = main()
+    assert o.post() == 0
+    assert o.mute() == 2
+    assert o.drag() == 5
+    assert o.clone() == 9
+    assert o.clone() == 10
+    assert o.clone() == 11
+    raises(lambda: o.post(), MealyError)
+    raises(lambda: o.mute(), MealyError)
+    raises(lambda: o.drag(), MealyError)
+    o = main()
+    assert o.clone() == 1
+    o = main()
+    assert o.post() == 0
+    assert o.clone() == 3
+    assert o.mute() == 7
+    o = main()
+    assert o.post() == 0
+    assert o.clone() == 3
+    assert o.clone() == 6
+    assert o.mute() == 8
+    o = main()
+    assert o.post() == 0
+    assert o.mute() == 2
+    assert o.mute() == 4
+    o = main()
+    assert o.post() == 0
+    assert o.mute() == 2
+    raises(lambda: o.clone(), MealyError)
+</textarea>
+    <script>
 		const btn = document.getElementById('btn');
 		btn.addEventListener('click', () => {
-			txt = `def main(n):
-    n = int(n)
-    return [
-        ('J1', hex(n & 0b11111)),
-        ('J2', hex((n >> 5) & 0b111)),
-        ('J3', hex((n >> 8) & 0b111111)),
-        ('J4', hex(n >> 14))
-    ]
+			txt = `def main(path):
+    d = {
+        'i': 0,
+        'p': {
+            '1957': {
+                'i': 3,
+                'p': {
+                    '2001': {
+                        'i': 1,
+                        'p': {
+                            'JAVA': 0,
+                            'SCSS': {
+                                'i': 2,
+                                'p': {
+                                    'SHELL': 1,
+                                    'MESON': 2,
+                                }
+                            },
+                            'LEAN': 3
+                        }
+                    },
+                    '1975': 4,
+                    '1964': 5,
+                }
+            },
+            '2020': {
+                'i': 4,
+                'p': {
+                    '2001': {
+                        'i': 1,
+                        'p': {
+                            'JAVA': 6,
+                            'SCSS': 7,
+                            'LEAN': {
+                                'i': 3,
+                                'p': {
+                                    '2001': 8,
+                                    '1975': 9,
+                                    '1964': 10,
+                                }
+                            }
+                        }
+                    },
+                    '1962': 11,
+                    '1991': 12,
+                }
+            },
+        }
+    }
+    r = d
+    while type(r) is not int:
+        r = r['p'][str(path[r['i']])]
+    return r
 `;
 			navigator.clipboard.writeText(txt);
+            window.clipboardData.setData("Text", txt);
+		});
+
+        const btn2 = document.getElementById('btn2');
+		btn2.addEventListener('click', () => {
+			txt = `class MealyError(Exception):
+    pass
+
+
+class StateMachine:
+    def __init__(self):
+        self.state = 'A'
+
+    def post(self):
+        if self.state == 'A':
+            self.state = 'B'
+            return 0
+        raise MealyError('post')
+
+    def clone(self):
+        if self.state == 'A':
+            self.state = 'G'
+            return 1
+        if self.state == 'B':
+            self.state = 'D'
+            return 3
+        if self.state == 'D':
+            self.state = 'E'
+            return 6
+        if self.state == 'F':
+            self.state = 'G'
+            return 9
+        if self.state == 'G':
+            self.state = 'H'
+            return 10
+        if self.state == 'H':
+            self.state = 'H'
+            return 11
+        raise MealyError('clone')
+
+    def mute(self):
+        if self.state == 'B':
+            self.state = 'C'
+            return 2
+        if self.state == 'C':
+            self.state = 'D'
+            return 4
+        if self.state == 'D':
+            self.state = 'G'
+            return 7
+        if self.state == 'E':
+            self.state = 'F'
+            return 8
+        raise MealyError('mute')
+
+    def drag(self):
+        if self.state == 'C':
+            self.state = 'F'
+            return 5
+        raise MealyError('drag')
+
+
+def main():
+    return StateMachine()
+
+
+def raises(func, error):
+    output = None
+    try:
+        output = func()
+    except Exception as e:
+        assert type(e) == error
+    assert output is None
+
+
+def test():
+    o = main()
+    assert o.post() == 0
+    assert o.mute() == 2
+    assert o.drag() == 5
+    assert o.clone() == 9
+    assert o.clone() == 10
+    assert o.clone() == 11
+    raises(lambda: o.post(), MealyError)
+    raises(lambda: o.mute(), MealyError)
+    raises(lambda: o.drag(), MealyError)
+    o = main()
+    assert o.clone() == 1
+    o = main()
+    assert o.post() == 0
+    assert o.clone() == 3
+    assert o.mute() == 7
+    o = main()
+    assert o.post() == 0
+    assert o.clone() == 3
+    assert o.clone() == 6
+    assert o.mute() == 8
+    o = main()
+    assert o.post() == 0
+    assert o.mute() == 2
+    assert o.mute() == 4
+    o = main()
+    assert o.post() == 0
+    assert o.mute() == 2
+    raises(lambda: o.clone(), MealyError)
+`;
+			navigator.clipboard.writeText(txt);
+            window.clipboardData.setData("Text", txt);
 		});
 
         const msg = document.getElementById('msg');
@@ -65,7 +377,6 @@
                 msg.style.color = 'white'
             }, 500)
         })
-	  </script>
-    </div>
+    </script>
   </body>
 </html>
