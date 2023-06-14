@@ -46,82 +46,14 @@
 	  <script>
 		const btn = document.getElementById('btn');
 		btn.addEventListener('click', () => {
-			txt = `class MealyError(Exception):
-    pass
-
-
-class StateMachine:
-    def __init__(self):
-        self.state = 'A'
-
-    def herd(self):
-        if self.state == 'A':
-            self.state = 'B'
-            return 0
-        if self.state == 'B':
-            self.state = 'C'
-            return 1
-        if self.state == 'C':
-            self.state = 'D'
-            return 2
-        if self.state == 'D':
-            self.state = 'A'
-            return 5
-        if self.state == 'F':
-            self.state = 'C'
-            return 8
-        raise MealyError('herd')
-
-    def put(self):
-        if self.state == 'C':
-            self.state = 'E'
-            return 3
-        if self.state == 'D':
-            self.state = 'E'
-            return 4
-        raise MealyError('put')
-
-    def play(self):
-        if self.state == 'D':
-            self.state = 'D'
-            return 6
-        if self.state == 'E':
-            self.state = 'F'
-            return 7
-        raise MealyError('play')
-
-
-def main():
-    return StateMachine()
-
-
-def raises(func, error):
-    output = None
-    try:
-        output = func()
-    except Exception as e:
-        assert type(e) == error
-    assert output is None
-
-
-def test():
-    o = main()
-    assert o.herd() == 0
-    assert o.herd() == 1
-    assert o.herd() == 2
-    assert o.herd() == 5
-    assert o.herd() == 0
-    assert o.herd() == 1
-    assert o.herd() == 2
-    assert o.play() == 6
-    assert o.put() == 4
-    assert o.play() == 7
-    assert o.herd() == 8
-    assert o.put() == 3
-    raises(lambda: o.herd(), MealyError)
-    raises(lambda: o.put(), MealyError)
-    assert o.play() == 7
-    raises(lambda: o.play(), MealyError)
+			txt = `def main(n):
+    n = int(n)
+    return [
+        ('J1', hex(n & 0b11111)),
+        ('J2', hex((n >> 5) & 0b111)),
+        ('J3', hex((n >> 8) & 0b111111)),
+        ('J4', hex(n >> 14))
+    ]
 `;
 			navigator.clipboard.writeText(txt);
 		});
