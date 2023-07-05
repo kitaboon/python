@@ -1,0 +1,9 @@
+import re
+
+
+def main(s):
+    ms = re.findall(r"\{\s?val\s?(.*?)==>\s?`\s?(.*?)}", s, re.DOTALL)
+    d = {}
+    for m in ms:
+        d[m[1].strip()] = int(m[0].strip())
+    return d
