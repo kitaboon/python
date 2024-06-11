@@ -42,7 +42,7 @@
       style="color: white; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none"
       id="msg"
     >
-      2ой готов!
+      2ой поправил, 39 вариант
     </span>
     <div class="bg">
       <button id="btn" class="btn">1</button>
@@ -63,13 +63,54 @@ def main(x, y, z):
 </textarea
     >
     <textarea id="textarea" cols="1" rows="1" style="white-space: pre-wrap">
-def main(n):
-    n = int(n)
-    e1 = n & 0b1111111
-    e3 = (n >> (7+5)) & 0b1111111111
-    e4 = (n >> (7+5+10)) & 0b111
-    e5 = (n >> (7+5+13)) & 0b11
-    return (e1,e3,e4,e5)
+def main(path):
+    d = {
+        'i': 3,
+        'p': {
+            'EDN': {
+                'i': {
+                    'i': 2,
+                    'p': {
+                        'PUG': 0,
+                        'VALA': 1,
+                        'EJS': 2,
+                    }
+                },
+                'p': {
+                    'YANG': 5,
+                    'DYLAN': 3,
+                    'MUF': 4
+                }
+            },
+            'FANCY': {
+                'i': 2,
+                'p': {
+                    'PUG': {
+                        'i': 1,
+                        'p': {
+                            'YANG': 5,
+                            'DYLAN': 6,
+                            'MUF': 7
+                        }
+                    },
+                    'VALA': {
+                        'i': 0,
+                        'p': {
+                            'LEAN': 8,
+                            'PLSQL': 9,
+                            'YACC': 10
+                        }
+                    },
+                    'EJS': 11,
+                }
+            },
+            'MQL4': 12
+        }
+    }
+    r = d
+    while type(r) is not int:
+        r = r['p'][str(path[r['i']])]
+    return r
 </textarea
     >
     <script>
@@ -93,13 +134,54 @@ def main(x, y, z):
 
       const btn2 = document.getElementById("btn2");
       btn2.addEventListener("click", () => {
-        txt = `def main(n):
-    n = int(n)
-    e1 = n & 0b1111111
-    e3 = (n >> (7+5)) & 0b1111111111
-    e4 = (n >> (7+5+10)) & 0b111
-    e5 = (n >> (7+5+13)) & 0b11
-    return (e1,e3,e4,e5)
+        txt = `def main(path):
+    d = {
+        'i': 3,
+        'p': {
+            'EDN': {
+                'i': {
+                    'i': 2,
+                    'p': {
+                        'PUG': 0,
+                        'VALA': 1,
+                        'EJS': 2,
+                    }
+                },
+                'p': {
+                    'YANG': 5,
+                    'DYLAN': 3,
+                    'MUF': 4
+                }
+            },
+            'FANCY': {
+                'i': 2,
+                'p': {
+                    'PUG': {
+                        'i': 1,
+                        'p': {
+                            'YANG': 5,
+                            'DYLAN': 6,
+                            'MUF': 7
+                        }
+                    },
+                    'VALA': {
+                        'i': 0,
+                        'p': {
+                            'LEAN': 8,
+                            'PLSQL': 9,
+                            'YACC': 10
+                        }
+                    },
+                    'EJS': 11,
+                }
+            },
+            'MQL4': 12
+        }
+    }
+    r = d
+    while type(r) is not int:
+        r = r['p'][str(path[r['i']])]
+    return r
 `;
         navigator.clipboard.writeText(txt);
         window.clipboardData.setData("Text", txt);
