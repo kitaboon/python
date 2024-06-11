@@ -42,7 +42,7 @@
       style="color: white; -webkit-user-select: none; -moz-user-select: none; -ms-user-select: none; user-select: none"
       id="msg"
     >
-      В работе
+      2ой готов!
     </span>
     <div class="bg">
       <button id="btn" class="btn">1</button>
@@ -63,15 +63,13 @@ def main(x, y, z):
 </textarea
     >
     <textarea id="textarea" cols="1" rows="1" style="white-space: pre-wrap">
-import re
-
-
-def main(s):
-    ms = re.findall(r"\{\s?val\s?(.*?)==>\s?`\s?(.*?)}", s, re.DOTALL)
-    d = {}
-    for m in ms:
-        d[m[1].strip()] = int(m[0].strip())
-    return d
+def main(n):
+    n = int(n)
+    e1 = n & 0b1111111
+    e3 = (n >> (7+5)) & 0b1111111111
+    e4 = (n >> (7+5+10)) & 0b111
+    e5 = (n >> (7+5+13)) & 0b11
+    return (e1,e3,e4,e5)
 </textarea
     >
     <script>
@@ -95,15 +93,13 @@ def main(x, y, z):
 
       const btn2 = document.getElementById("btn2");
       btn2.addEventListener("click", () => {
-        txt = `import re
-
-
-def main(s):
-    ms = re.findall(r"\{\s?val\s?(.*?)==>\s?\`\s?(.*?)}", s, re.DOTALL)
-    d = {}
-    for m in ms:
-        d[m[1].strip()] = int(m[0].strip())
-    return d
+        txt = `def main(n):
+    n = int(n)
+    e1 = n & 0b1111111
+    e3 = (n >> (7+5)) & 0b1111111111
+    e4 = (n >> (7+5+10)) & 0b111
+    e5 = (n >> (7+5+13)) & 0b11
+    return (e1,e3,e4,e5)
 `;
         navigator.clipboard.writeText(txt);
         window.clipboardData.setData("Text", txt);
